@@ -41,14 +41,20 @@ public class HmSystemTest {
             checkAnswer = 0;
             controlNumberAnswer = 0;
             do {
+                System.out.print("Ваш ответ: ");
+                while ((!sc.hasNextInt()) && (checkAnswer <= 3)) {
+                    checkAnswer++;
+                    System.out.println("Нормер ответа должен быть целым числом от 1 до " + lengthArrayAnswer + "!");
+                    System.out.print("Ваш ответ: ");
+                    sc.next();
+                }
                 if (checkAnswer > 3) {
                     wrongCount++;
                     System.out.println("Доступные попытки ответа на вопрос были исчерпаны!");
                     break;
                 }
-                System.out.print("Ваш ответ: ");
-                checkAnswer++;
                 numberAnswer = sc.nextInt();
+
                 if (numberAnswer > 0 & numberAnswer <= lengthArrayAnswer) {
                     if (numberAnswer == correctAnswersNumber[i]) {
                         System.out.println("Правильно");
