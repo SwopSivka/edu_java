@@ -45,4 +45,20 @@ public class Question {
     public Integer getNumberCorrectAnswer() {
         return this.numberCorrectAnswer;
     }
+
+    public Integer askQuestion() {
+        int res;
+        System.out.println(this.getName());
+        //UserInput uInput = new UserInput();
+        this.printAnswers();
+        int countAttempt = this.getTaskСomplexity() + 2;
+        int countAnswers = this.getLengthAnswers();
+        int numberAnswer = UserInput.consolesInputAnswer(countAttempt, countAnswers);
+        if (numberAnswer == this.getNumberCorrectAnswer()) {
+            res = 1 ;
+        } else {
+            res = 0;
+        }
+        return res;
+    }
 }

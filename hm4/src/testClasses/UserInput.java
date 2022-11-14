@@ -3,7 +3,7 @@ package testClasses;
 import java.util.Scanner;
 
 public class UserInput {
-    public Integer inputAnswer(Integer countAttempts, Integer countAnswers) {
+    public static Integer consolesInputAnswer(Integer countAttempts, Integer countAnswers) {
         //проверка ввода от пользователя
         Scanner sc = new Scanner(System.in);
         int controlNumberAnswer = 0;

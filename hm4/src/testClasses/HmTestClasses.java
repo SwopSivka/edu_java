@@ -27,9 +27,10 @@ public class HmTestClasses {
         Answer[] Answers3 = {ans8, ans9, ans10}; //"1. put", "2. pull", "3. push"
         Question question3 = new Question("Вопрос №3: С помощью какой команды git можно отправить изменения в удаленный репозиторий?", 1, Answers3, 3);
 
-        Test test1 = new Test();
+        //Test test1 = new Test();
         Question[] questions = {question1, question2, question3};
-        test1.passTest(questions);
+        Test.passTest(questions);
+        //test1.passTest(questions);
 
     }
 }
