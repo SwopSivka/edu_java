@@ -1,60 +1,34 @@
 package testClasses;
 
 public class Question {
-    private String name;
-    private Integer taskСomplexity;
-    private Answer[] answers ;
-    private Integer numberCorrectAnswer;
+    private final String name;
+    private final Integer taskСomplexity;
+    private final String[] answers;
+    private final Integer numberCorrectAnswer;
+    private final UserInput uInput = new ConsoleUserInput();
+    private final UserOutput uOutput = new ConsolesUserOutput();
 
-    public Question () {
-        this.name = null;
-        this.taskСomplexity = 1;
-    }
-    public Question (String name, Integer taskСomplexity, Answer[] answers, Integer numberAnswer) {
+    public Question (String name, Integer taskСomplexity, String[] answers, Integer numberAnswer) {
         this.name = name;
         this.taskСomplexity = taskСomplexity;
         this.answers = answers;
         this.numberCorrectAnswer = numberAnswer;
     }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public Integer getTaskСomplexity() {
-        return taskСomplexity;
-    }
-    public void setTaskСomplexity(Integer taskСomplexity) {
-        this.taskСomplexity = taskСomplexity;
-    }
-    public void setAnswers(Answer[] answerQuestion) {
-        this.answers = answerQuestion;
-    }
+
     public void printAnswers() {
-        for (int i = 1; i <= this.answers.length; i++) {
-            System.out.println(i + ". " + this.answers[ i - 1 ].getTextAnswer());
+        for (int i = 1; i <= answers.length; i++) {
+            uOutput.printMessage(i + ". " + answers[ i - 1 ]);
         }
-    }
-    public int getLengthAnswers() {
-        return this.answers.length;
-    }
-    public void setNumberCorrectAnswer(Integer numberAnswer) {
-        this.numberCorrectAnswer = numberAnswer;
-    }
-    public Integer getNumberCorrectAnswer() {
-        return this.numberCorrectAnswer;
     }
 
     public Integer askQuestion() {
         int res;
-        System.out.println(this.getName());
-        //UserInput uInput = new UserInput();
+        System.out.println(name);
         this.printAnswers();
-        int countAttempt = this.getTaskСomplexity() + 2;
-        int countAnswers = this.getLengthAnswers();
-        int numberAnswer = UserInput.consolesInputAnswer(countAttempt, countAnswers);
-        if (numberAnswer == this.getNumberCorrectAnswer()) {
+        int countAttempt = taskСomplexity + 2;
+        int countAnswers = answers.length;
+        int numberAnswer = uInput.read(countAttempt, countAnswers, 0);
+        if (numberAnswer == numberCorrectAnswer) {
             res = 1 ;
         } else {
             res = 0;

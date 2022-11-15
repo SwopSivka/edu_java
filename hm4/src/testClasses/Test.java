@@ -1,50 +1,30 @@
 package testClasses;
 
 public class Test {
+    private final Question[] questions;
+    private final UserOutput uOutput;
+    public Test(Question[] questions) {
+        this.questions = questions;
+        this.uOutput = new ConsolesUserOutput();
+    }
 
-    public static void passTest(Question[] questions) {
-        // что можно, обойтись без него
-        //убрать от сюда обращение к Questiron, но тогда как реализовать обработку вопросов,
-        //как сюды передавать объекты другого класса?
-        //возможно в моей реализации не нужен данный класс или тут будет один метод оп вызову метода из класса Question
-        // Пока выкинула от сюдова все обрашения в классу Question, оставила ток вопросы
-        int numberAnswer;
+    public void passTest() {
         int correctCount = 0;
         int countQuestion = questions.length;
         int wrongCount;
         int ask;
-        int countAttempt = 0;
-        int countAnswers = 0;
-        //пред реализация
-        /*UserInput uInput = new UserInput();
-
-        for (Question q : questions) {
-            System.out.println(q.getName());
-            q.printAnswers();
-            countAttempt = q.getTaskСomplexity() + 2;
-            countAnswers = q.getLengthAnswers();
-            numberAnswer = uInput.inputAnswer(countAttempt, countAnswers);
-            if (numberAnswer == q.getNumberCorrectAnswer()) {
-                correctCount ++;
-                System.out.println("Правильно");
-            } else {
-                System.out.println("Неправильно");
-            }
-            System.out.println("------------------");
-        }*/
-        //новая реализация
         for (Question q : questions) {
             ask = q.askQuestion();
             if (ask == 1) {
               correctCount ++;
-              System.out.println("Правильно");
+                uOutput.printMessage("Правильно");
             } else {
-              System.out.println("Неправильно");
+                uOutput.printMessage("Неправильно");
             }
-            System.out.println("------------------");
+            uOutput.printMessage("------------------");
         }
 
         wrongCount = countQuestion - correctCount;
-        System.out.println("Всего вопросов " + countQuestion + ". Результатов: правильно " + correctCount + ", неправильно " + wrongCount);
+        uOutput.printMessage("Всего вопросов " + countQuestion + ". Результатов: правильно " + correctCount + ", неправильно " + wrongCount);
     }
 }
