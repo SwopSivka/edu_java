@@ -1,6 +1,7 @@
 package hm6Banks;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class Main {
@@ -16,22 +17,23 @@ public class Main {
         Account acc4 = new Account(2345, 7);
         Account acc5 = new Account(15, 10);
 
+        UserMapBank bank = new UserMapBank();
+        HashMap<Client, HashSet<Account>> persons = new HashMap<>();
         HashMap<Account, Client> accounts = new HashMap<>();
-        accounts.put(acc1, person1);
-        accounts.put(acc2, person1);
-        accounts.put(acc3, person3);
-        accounts.put(acc4, person2);
-        accounts.put(acc5, person3);
 
-        System.out.println("Для " + acc2);
-        System.out.println("Клиент: " + accounts.get(acc2) + "\n");
+        bank.HashMapPut(accounts, persons, acc1, person1);
+        bank.HashMapPut(accounts, persons, acc2, person1);
+        bank.HashMapPut(accounts, persons, acc3, person3);
+        bank.HashMapPut(accounts, persons, acc4, person2);
+        bank.HashMapPut(accounts, persons, acc5, person3);
 
-        System.out.println("Для клиента с номером паспорта 123456:");
-        for (Map.Entry<Account, Client> entry: accounts.entrySet()) {
-                if (entry.getValue().equals("123456")) {
-                    System.out.println(entry.getKey());
-            }
+        System.out.println("\n1) Вывод счетов для клиента. Для: " + person2);
+        for (Account acc : persons.get(person2)) {
+            System.out.println(acc);
         }
+
+        System.out.println("\n2) Вывод клиента по счету. Для: " + acc2);
+        System.out.println("Клиент: " + accounts.get(acc2) + "\n");
 
     }
 }
