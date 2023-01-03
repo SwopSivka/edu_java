@@ -1,0 +1,180 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title>Домашняя работа "Студенты"</title>
+		<style>
+			h3 {
+				color: black;
+			}
+
+			.form-box {
+				border: 1px solid #2196f3;
+				width: 400;
+				height: 115;
+				padding: 15px;
+				position: relative;
+			}
+
+			.form-box label {
+				margin-bottom: 5px;
+				display: inline-block;
+				width: 150px;
+			}
+
+			.form-box input, select {
+				right: 0;
+				left: 15px;
+				border: 1px solid #2196f3;
+				padding-right: 0;
+				width: 230px;
+				position: relative;
+			}
+
+			.form-box button {
+				margin-top: 20px;
+			}
+
+			.students-tab {
+				border: 1px solid steelblue;
+				width: 600px;
+				border-collapse: collapse;
+				margin-bottom: 50px;
+			}
+
+			.students-tab tr td {
+				border: 1px solid steelblue;
+			}
+
+			.studentCell {
+
+			}
+		</style>
+
+    <script>
+        "use strict"
+		function calculateAge(prLoad) {
+			const stTab = document.getElementById('studentsTab');
+			let count = stTab.rows.length - 3; //вычитаем 1- строка Заголовок, 2 - строки подвал
+			let dateBirth;
+			let age;
+			let sumAge = 0;
+			let i;
+
+			for (i=1; i <= count; i++) {
+				if (prLoad == 1) {
+					dateBirth = stTab.rows[i].cells[2].innerText;
+					dateBirth = new Date(dateBirth.replace(/(\d+).(\d+).(\d+)/, '$3/$2/$1'));
+					age = Math.floor((new Date() - dateBirth) / 1000 / 60 / 60 / 24 / 365);
+				} else {
+					age = Number(stTab.rows[i].cells[3].innerText);
+				}
+				sumAge = sumAge + age;
+				stTab.rows[i].cells[3].innerText = age;
+			}
+			age = Math.round(sumAge / count);
+			stTab.rows[stTab.rows.length - 1].cells[1].innerText = age;
+		}
+
+        function addStudent() {
+			const studentsTbody = document.getElementById("studentsTab").getElementsByTagName('tbody')[0];
+			const count = studentsTbody.rows.length;
+            const newRow = studentsTbody.insertRow(count);
+
+			let studentName = document.getElementById("studentName").value;
+			let studentBirth = document.getElementById("studentDateBirth").value;
+			let stdentGender = document.getElementById("studentGender").value;
+
+			let age = Math.floor((new Date() - new Date(studentBirth)) / 1000 / 60 / 60 / 24 / 365);
+
+			//Проверки
+			if (studentName.length <= 3 ) {
+				alert('Имя студента указано не верно!');
+				return;
+			}
+			if (stdentGender == "Выберите пол") {
+				alert('Укажите пол студента!');
+				return;
+			}
+			if ((studentBirth == "") || (age < 14 )) {
+				alert('Возраст студента дожен быть больше 14 лет');
+				return;
+			}
+
+            let newCell;
+			newCell = newRow.insertCell(0);
+            newCell.appendChild(document.createTextNode(studentName));
+			newCell = newRow.insertCell(1);
+			newCell.appendChild(document.createTextNode(stdentGender));
+			newCell = newRow.insertCell(2);
+			newCell.appendChild(document.createTextNode(studentBirth.replace(/(\d+)-(\d+)-(\d+)/, '$3.$2.$1')));
+			newCell = newRow.insertCell(3);
+			newCell.appendChild(document.createTextNode(age));
+
+			calculateAge(0);
+        }
+	</script>
+	</head>
+
+	<body>
+		<h3>Форма добавления информации о студенте</h3>
+		<div class = "form-box">
+			<label>Имя студента:</label>
+			<input id = "studentName" type = "text" value = "Вася"><br>
+			<label>Дата рождения:</label>
+			<input id = "studentDateBirth" type="date" value = ""><br>
+			<label>Пол:</label>
+				<select id = "studentGender">
+					<option selected disabled>Выберите пол</option>
+					<option value = "женщина">женщина</option>
+					<option value = "мужчина">мужчина</option>
+				</select><br>
+			<button onclick = "addStudent()">Добавить</button>
+		</div>
+
+		<h3>Таблица студентов</h3>
+		<table class="students-tab" id="studentsTab">
+			<thead>
+				<tr>
+					<td width = "170px" >Имя студента</td>
+					<td width = "50px">Пол</td>
+					<td width = "80px">Дата рождения</td>
+					<td width = "50px">Возраст</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Иван Федорович Штейн</td>
+					<td>мужчина</td>
+					<td>01.01.2000</td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td>Марфа Игнасиевна Дорвянова</td>
+					<td>женщина</td>
+					<td>01.01.2001</td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td>Елена Валерьевна Федорова</td>
+					<td>женщина</td>
+					<td>15.02.2002</td>
+					<td>0</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4" height = "20px"></td>
+				</tr>
+				<tr>
+					<td colspan="3">Средний возраст студентов</td>
+					<td>0</td>
+				</tr>
+			</tfoot>
+		</table>
+
+	</body>
+
+	<script>
+		calculateAge(1);
+	</script>
+</html>
